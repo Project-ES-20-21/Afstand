@@ -1,0 +1,46 @@
+#include <WiFi.h>
+#include <Arduino.h>
+#include <circ-buffer.h>
+ 
+char* ssid1 = "ESP32-Access-Point";
+char* password1 =  "123456789";
+
+
+ 
+CircBuffer buffer;
+int teller=0;
+float * avg;
+
+CircBufferStatus_t initBuffers(uint8_t size){
+  CircBufferStatus_t status = buffer.init(size);
+  if(status != CB_SUCCESS){
+  return status;
+}
+  return CB_SUCCESS;
+}
+
+ 
+void setup() {
+ 
+  Serial.begin(115200);
+  pinMode(2,OUTPUT);  
+  Serial.println("Connecting Wifi...");
+  WiFi.begin(ssid1,password1);
+    Serial.print("Connecting");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  Serial.print("Connected, IP address: ");
+  Serial.println(WiFi.localIP());
+
+}
+ 
+void loop() {
+  delay(500);
+  long rssi = WiFi.RSSI();
+  
+}
